@@ -15,7 +15,7 @@ Note: StackStorm itself is not acting as the parser for messages. Only messages 
 
 # To install
 
-```st2 pack install https://github.com/DavidJohnGee/ghost2loggeralpha```
+```st2 pack install ghost2logger```
 
 Create an ST2 API-Token
 
