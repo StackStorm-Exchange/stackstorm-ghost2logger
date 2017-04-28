@@ -29,7 +29,7 @@ Configure the Ghost2logger pack
 
 You can accept the defaults barring the apikey.
 
-This ```config.yaml``` which lives in the StackStorm ```/opt/stackstorm/configs``` directory is nearly all defaults. Remember, change the ```st2_api_key``` to the one just generated.
+This config file ```ghost2logger.yaml``` which lives in the StackStorm ```/opt/stackstorm/configs``` directory is nearly all defaults. Remember, change the ```st2_api_key``` to the one just generated.
 
 ```yaml
 ---

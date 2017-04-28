@@ -16,6 +16,7 @@
     type: "string"
     secret: false
     required: true
+    default: "REPLACE_ME"
   syslog_listen_port:
     description: "Port for the Syslog sensor to listen on."
     type: "string"
