@@ -18,13 +18,8 @@ limitations under the License.
 # See ../requirements.txt
 
 import eventlet
-import json
-from st2client.models import KeyValuePair
-from requests.auth import HTTPBasicAuth
-from base64 import b64encode
-from requests.auth import HTTPBasicAuth
 from st2reactor.sensor.base import Sensor
-from flask import request, json, Flask, Response
+from flask import request, Flask, Response
 from functools import wraps
 
 eventlet.monkey_patch(
