@@ -170,8 +170,8 @@ class Ghost2loggerLoopback(PollingSensor):
                 # Once we've done this, the rules are the same
             self._rules = _new
         except Exception as e:
-            self._logger.info('[Ghost2logger]: Issue with parsing rules: '
-                              + str(e))
+            self._logger.info('[Ghost2logger]: Issue with parsing rules: ' +
+                              str(e))
             return
 
     def _rest_process(self, _json):

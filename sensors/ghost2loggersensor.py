@@ -143,8 +143,8 @@ class Ghost2loggerSensor(Sensor):
             payload = request.json
             if 'pattern' and 'host' and 'message' in payload:
                 self._logger.info(request.json)
-                self._logger.debug('[ghost2logger_sensor]: processing request {}'.
-                                   format(payload))
+                self._logger.debug('[ghost2logger_sensor]: processing request'
+                                   ' {}'.format(payload))
 
                 self._sensor_service.dispatch(trigger=self._pmatch,
                                               payload=payload)
