@@ -66,7 +66,7 @@ class Ghost2loggerLoopback(PollingSensor):
     def poll(self):
         """Poll the APIs."""
         if not self._st2_api_key:
-            raise Exception('[ghost2logger_sensor]: _st2_apl_key not set')
+            raise Exception('[ghost2logger_sensor]: _st2_api_key not set')
 
         if not self._username:
             raise Exception('[ghost2logger_sensor]: _username not set')
@@ -85,14 +85,22 @@ class Ghost2loggerLoopback(PollingSensor):
             self._logger.info('[ghost2logger_sensor]: purged')
             self._ghost2loggerGUID = _tmp_guid
 
-        self._logger.info('[ghost2logger_sensor]: Ghost2logger GUID ' +
-                          self._ghost2loggerGUID)
+        try:
+            self._logger.info('[ghost2logger_sensor]: Ghost2logger GUID ' +
+                              self._ghost2loggerGUID)
+        except:
+            self._logger.info('[ghost2logger_sensor]: Do not have GUID')
 
         # 2. Connect to API and get rules
         HEADERS = {"St2-Api-Key": self._st2_api_key}
-        r = requests.get(self._st2url, headers=HEADERS, verify=False)
-        _output_copy = r.json()
-        self._process_rules(_output_copy)
+
+        try:
+            r = requests.get(self._st2url, headers=HEADERS, verify=False)
+            _output_copy = r.json()
+            self._process_rules(_output_copy)
+        except Exception as e:
+            self._logger.info('[ghost2logger_sensor]: Failed to connect to'
+                              'Ghost2logger service' + str(e))
 
     def cleanup(self):
         """Stuff."""
@@ -181,8 +189,14 @@ class Ghost2loggerLoopback(PollingSensor):
         HEADERS = {"Content-Type": 'application/json'}
 
         _URL = self._ghost_url + "/v1/"
-        requests.put(_URL, headers=HEADERS, verify=False, json=_json,
-                     auth=(self._username, self._password))
+
+        try:
+            requests.put(_URL, headers=HEADERS, verify=False, json=_json,
+                         auth=(self._username, self._password))
+
+        except Exception as e:
+            self._logger.info('[Ghost2logger]: Issue with posting to '
+                              'Ghost2logger: ' + str(e))
 
     def _ghost2loggergetGUID(self):
         # Let's deal with the JSON API calls here
@@ -190,16 +204,21 @@ class Ghost2loggerLoopback(PollingSensor):
         HEADERS = {"Content-Type": 'application/json'}
 
         _URL = self._ghost_url + "/v1/guid"
-        r = requests.get(_URL, headers=HEADERS, verify=False,
-                         auth=(self._username, self._password))
-        _data = r.json()
-        if _data['host'] == "GUID":
-            for _item in _data['pattern']:
-                _guid = str(_item)
+        try:
+            r = requests.get(_URL, headers=HEADERS, verify=False,
+                             auth=(self._username, self._password))
+            _data = r.json()
+            if _data['host'] == "GUID":
+                for _item in _data['pattern']:
+                    _guid = str(_item)
 
-            return _guid
-        else:
-            return ""
+                return _guid
+            else:
+                return ""
+
+        except Exception as e:
+            self._logger.info('[Ghost2logger]: Cannot get GUID: ' +
+                              str(e))
 
     def _ghost2loggergpurge(self):
         # Let's deal with the JSON API calls here
@@ -208,8 +227,13 @@ class Ghost2loggerLoopback(PollingSensor):
         HEADERS = {"Content-Type": 'application/json'}
 
         _URL = self._ghost_url + "/v1/all"
-        r = requests.delete(_URL, headers=HEADERS, verify=False,
-                            auth=(self._username, self._password))
+        try:
+            r = requests.delete(_URL, headers=HEADERS, verify=False,
+                                auth=(self._username, self._password))
 
-        _data = r.json()
-        self._logger.info('[Ghost2logger]: Purged ghost2logger' + str(_data))
+            _data = r.json()
+            self._logger.info('[Ghost2logger]: Purged ghost2logger' +
+                              str(_data))
+        except Exception as e:
+            self._logger.info('[Ghost2logger]: Cannot purge Ghost2logger: ' +
+                              str(e))
