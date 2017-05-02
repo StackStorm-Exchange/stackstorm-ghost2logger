@@ -13,7 +13,7 @@ Your actions can then use the trigger fields like any other pack.
 
 Note: StackStorm itself is not acting as the parser for messages. Only messages that have been parsed and matched by the Ghost2logger service are passed in to StackStorm. In essence it's a double match with only 'direct hits' reaching the StackStorm rule engine.
 
-# To install
+# To Install
 
 ```st2 pack install ghost2logger```
 
@@ -104,9 +104,10 @@ In the criteria section of the rule, ensure that the pattern match types are bot
 
 # Last Bit
 
-This is in the alpha stage at the moment. Please use the pack in non-critical scenarios until I'm happy it's ready for production.
+Whilst not quite beta, this pack is still work in progress. I'm happy it's at a stable level, but will continue to tweak and add improvements.
 
-I'll continue working on it in the background and honing it's abilities.
+Please [look here](http://ipengineer.net/2017/05/stackstorm-ghost2logger-pack/) for a detailed blog post of how to install and configure the pack, including steps of how to restart the StackStorm sensor container, check logs and also how to start and check logs for the Ghost2logger executable. A great place to start for those just starting out with StackStorm.
+
 
 [Email me](mailto:david.gee@ipengineer.net) for more information or if you want to contribute.
 You can also check [this link](https://www.youtube.com/watch?v=JnxoNuIs2hE) out which shows the Ghost2logger pack working!
