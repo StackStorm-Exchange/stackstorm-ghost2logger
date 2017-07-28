@@ -1,0 +1,10 @@
+---
+  username: "admin"
+  password: "admin"
+  st2_api_key: "ODQzNmU3ZWVhNWNiYmQ1NTllZTNmMDc3NjkzZDE3ZjRiMDNhODQyMDE3YzlmYzA2MjVjNDE0YWU4NGJhNDhmMg"
+  syslog_listen_port: "514"
+  sensor_listen_ip: "0.0.0.0"
+  sensor_listen_port: "12022"
+  ghost_ip: "0.0.0.0"
+  ghost_port: "12023"
+  st2url: "http://127.0.0.1:9101/v1/rules/?limit=10&pack=ghost2logger"
