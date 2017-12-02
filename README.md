@@ -1,6 +1,12 @@
 # Ghost2logger README
 
-This is a new pack for StackStorm that does something simple but powerful.
+This pack allows StackStorm to receive Syslogs directly and create events from them based on the use of rules.
+
+__WARNING__
+
+Version 1.1.0 is not backwards compatible with any other version. PLEASE ensure you re-generate your configuration. The rules will be fine.
+
+__Usage__
 
 Users send their device and software generated syslogs to a service that is part of this pack.
 When rules are created relating to the 'Ghost2logger' syslog pack (this pack!), then those rules are injected into the Ghost2logger syslog service. Through regular expression pattern matching, syslogs that are received are compared against an in memory database. If the transmission host IP address and the regular expression find a match, a trigger is dispatched containing three things:
@@ -42,7 +48,24 @@ This config file ```ghost2logger.yaml``` which lives in the StackStorm ```/opt/s
   ghost_ip: "0.0.0.0"
   ghost_port: "12023"
   st2url: "http://127.0.0.1:9101/v1/rules/?limit=10&pack=ghost2logger"
+  debugmode = false
+  web_hook_auth_header_key: "Authorization"
+  web_hook_auth_header_val: "Basic YWRtaW46YWRtaW4="
 ```
+
+__Breakdown of config items__
+username:                  This is the username to access the API on the Ghost2logger service.
+password:                  This is the password to access the API on the Ghost2logger service.
+st2_api_key:	           This key is so the loopback sensor can access the ST2 API and pull rule information.
+syslog_listen_port:        This is the port that the Syslog listener will open.
+sensor_listen_ip:          This is the IP address of the event sensor. 0.0.0.0 is fine for local installs.
+sensor_listen_port:        This is the port that the event sensor listens on.
+ghost_ip:                  This is the listening IP address of the Ghost2logger service API. This is so the loopback sensor can post rule info.
+ghost_port:                This is the listening port on the IP address above.
+st2url:                    A pre-made URL for the loopback sensor to call to retireve rules.
+debugmode:                 This increases the logging verbosity for the Ghost2logger service.
+web_hook_auth_header_key:  This is the webhook auth header key. Ghost2logger can be used generically without ST2.
+web_hook_auth_header_val:  The value of the header above. By default, it equates to "admin:admin".
 
 # Ghost2logger Service
 
@@ -56,11 +79,11 @@ or run as a service:
 	Check that it's running ```systemctl status ghost2logger.service```
 
 	Then you can look at messages coming out of it using: ```journalctl -u ghost2logger.service -f```
-  Use Ctrl+c to exit.
+  Use Ctrl+c to exit without affecting the service.
 
 # Rules
 
-In order to use Ghost2logger, all you need to do is two things:
+In order to use Ghost2logger with StackStorm, all you need to do is two things:
 
 *	Point your Syslog senders to the StackStorm instance and port 514
 *	Create rules that look like the following:
@@ -100,16 +123,19 @@ action:
     ref: chatops.post_message
 ```
 
-In the criteria section of the rule, ensure that the pattern match types are both eq. The trigger.pattern is actually a regular expression, but that pattern is also read from the rules engine and also sent back to it in the trigger. If you try running a regular expression on the same regular expression, it's a little inception(y) and won't work.
+Here's some important and interesting stuff to know about rule generation.
+
+1. Since version 1.1.0, you can now use regular expression pattern matching on the `Host` field.
+2. `Pattern` field match criteria must always be `eq` as it's always processed as a regular expression in the pipeline. If you do a regular expression match on a regular expression, it gets a little too inception like and just confuses things.
+3. You can use either `eq` or `regex` for IP addresses. Both work. Use the first for a direct match, although you can also use `regex`. The heavy processing is done away from StackStorm and thus, any trigger generated will always match the rule critera 1:1. The match criteria for the Ghost2logger service comes from the rule base, so any match is always a direct match and there are no mishits so to speak.
 
 # Last Bit
 
-Whilst not quite beta, this pack is still work in progress. I'm happy it's at a stable level, but will continue to tweak and add improvements.
+This pack is still work in progress. I'm happy it's at a stable level, but will continue to tweak and add improvements. The 1.1.0 release is a significant step forward to full production grade and please continue to report issues, bugs or feature requests.
 
-Please [look here](http://ipengineer.net/2017/05/stackstorm-ghost2logger-pack/) for a detailed blog post of how to install and configure the pack, including steps of how to restart the StackStorm sensor container, check logs and also how to start and check logs for the Ghost2logger executable. A great place to start for those just starting out with StackStorm.
+Please [look here](http://ipengineer.net/2017/05/stackstorm-ghost2logger-pack/) for a detailed blog post of how to install and configure the pack, including steps of how to restart the StackStorm sensor container, check logs and also how to start and check logs for the Ghost2logger executable. A great place to start for those just starting out with StackStorm. *Note - this blog post as of December 2017 is out of date, please use caution!*
 
 
 [Email me](mailto:david.gee@ipengineer.net) for more information or if you want to contribute.
 You can also check [this link](https://www.youtube.com/watch?v=JnxoNuIs2hE) out which shows the Ghost2logger pack working!
-
 
