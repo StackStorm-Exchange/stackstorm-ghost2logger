@@ -84,8 +84,7 @@ class Ghost2loggerLoopback(PollingSensor):
                 self._logger.info('[ghost2logger_sensor]: Ghost2logger GUID ' +
                                   self._ghost2loggerGUID)
             except Exception as e:
-                self._logger.info('ghost2logger_sensor]: Do not have GUID')  
-
+                self._logger.info('ghost2logger_sensor]: Do not have GUID')
 
         # 2. Connect to API and get rules
         HEADERS = {"St2-Api-Key": self._st2_api_key}
