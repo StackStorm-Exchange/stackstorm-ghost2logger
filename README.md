@@ -130,13 +130,10 @@ Here's some important and interesting stuff to know about rule generation.
 2. `Pattern` field match criteria must always be `eq` as it's always processed as a regular expression in the pipeline. If you do a regular expression match on a regular expression, it gets a little too inception like and just confuses things.
 3. You can use either `eq` or `regex` for IP addresses. Both work. Use the first for a direct match, although you can also use `regex`. The heavy processing is done away from StackStorm and thus, any trigger generated will always match the rule critera 1:1. The match criteria for the Ghost2logger service comes from the rule base, so any match is always a direct match and there are no mishits so to speak.
 
-# Last Bit
-
 This pack is still work in progress. I'm happy it's at a stable level, but will continue to tweak and add improvements. The 1.1.0 release is a significant step forward to full production grade and please continue to report issues, bugs or feature requests.
 
 Please [look here](http://ipengineer.net/2017/05/stackstorm-ghost2logger-pack/) for a detailed blog post of how to install and configure the pack, including steps of how to restart the StackStorm sensor container, check logs and also how to start and check logs for the Ghost2logger executable. A great place to start for those just starting out with StackStorm. *Note - this blog post as of December 2017 is out of date, please use caution!*
 
-
 [Email me](mailto:david.gee@ipengineer.net) for more information or if you want to contribute.
-You can also check [this link](https://www.youtube.com/watch?v=JnxoNuIs2hE) out which shows the Ghost2logger pack working!
+You can also check [this link](https://youtu.be/vr_SNLAa0Zw) out which shows the Ghost2logger pack working along with installation.
 
