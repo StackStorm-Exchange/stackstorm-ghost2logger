@@ -54,8 +54,8 @@ This config file ```ghost2logger.yaml``` which lives in the StackStorm ```/opt/s
 ```
 
 __Breakdown of config items__
-username:                  This is the username to access the API on the Ghost2logger service.
-password:                  This is the password to access the API on the Ghost2logger service.
+username:                  This is the username to access the API on the Ghost2logger service. It's also the username for the ghost2logger sensor that receives the updates from Ghost2logger. 
+password:                  This is the password to access the API on the Ghost2logger service. It's also the username for the ghost2logger sensor that receives the updates from Ghost2logger.
 st2_api_key:	           This key is so the loopback sensor can access the ST2 API and pull rule information.
 syslog_listen_port:        This is the port that the Syslog listener will open.
 sensor_listen_ip:          This is the IP address of the event sensor. 0.0.0.0 is fine for local installs.
@@ -64,8 +64,8 @@ ghost_ip:                  This is the listening IP address of the Ghost2logger 
 ghost_port:                This is the listening port on the IP address above.
 st2url:                    A pre-made URL for the loopback sensor to call to retireve rules.
 debugmode:                 This increases the logging verbosity for the Ghost2logger service.
-web_hook_auth_header_key:  This is the webhook auth header key. Ghost2logger can be used generically without ST2.
-web_hook_auth_header_val:  The value of the header above. By default, it equates to "admin:admin".
+web_hook_auth_header_key:  This is the webhook auth header key. Ghost2logger can be used generically without ST2. 
+web_hook_auth_header_val:  The value of the header above. By default, it equates to "admin:admin". This value actually matches the username and password combination in this configuration, as the sensor uses those config fields for authorization against the REST API.
 
 # Ghost2logger Service
 
