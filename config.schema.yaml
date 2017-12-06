@@ -53,3 +53,15 @@
     secret: false
     required: true
     default: "http://127.0.0.1:9101/v1/rules/?limit=10&pack=ghost2logger"
+  web_hook_auth_header_key:
+    description: "Header key name for the output webhook capability."
+    type: "string"
+    secret: false
+    required: true
+    default: "Authorization"
+  web_hook_auth_header_val:
+    description: "Header value for the output webhook capability."
+    type: "string"
+    secret: false
+    required: true
+    default: "Basic YWRtaW46YWRtaW4="

@@ -1,10 +1,12 @@
 ---
-  username: "admin"
-  password: "admin"
-  st2_api_key: "ODQzNmU3ZWVhNWNiYmQ1NTllZTNmMDc3NjkzZDE3ZjRiMDNhODQyMDE3YzlmYzA2MjVjNDE0YWU4NGJhNDhmMg"
-  syslog_listen_port: "514"
-  sensor_listen_ip: "0.0.0.0"
-  sensor_listen_port: "12022"
-  ghost_ip: "0.0.0.0"
-  ghost_port: "12023"
-  st2url: "http://127.0.0.1:9101/v1/rules/?limit=10&pack=ghost2logger"
+  ghost_ip: 0.0.0.0
+  ghost_port: '12023'
+  password: admin
+  sensor_listen_ip: 0.0.0.0
+  sensor_listen_port: '12022'
+  st2_api_key: MTczZmMwYTJiYTdhYzAwY2VhMWIzNjkzZjM5Y2UzOTM4YWQxZWY1YmJmYWVjMWVkYWI1MGNkMzcwNmRkMjBlNQ
+  st2url: http://127.0.0.1:9101/v1/rules/?limit=10&pack=ghost2logger
+  syslog_listen_port: '514'
+  username: admin
+  web_hook_auth_header_key: Authorization
+  web_hook_auth_header_val: Basic YWRtaW46YWRtaW4=

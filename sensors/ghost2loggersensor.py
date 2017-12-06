@@ -141,7 +141,7 @@ class Ghost2loggerSensor(Sensor):
         self._logger.info('[Ghost2logger]: Received Request')
         if request.headers['Content-Type'] == 'application/json':
             payload = request.json
-            if 'pattern' and 'host' and 'message' in payload:
+            if 'pattern' and 'host' and 'hostpattern' and 'message' in payload:
                 self._logger.info(request.json)
                 self._logger.debug('[ghost2logger_sensor]: processing request'
                                    ' {}'.format(payload))

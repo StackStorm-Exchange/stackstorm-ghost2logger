@@ -37,10 +37,6 @@ class Ghost2loggerLoopback(PollingSensor):
 
         self._username = self._config.get('username')
         self._password = self._config.get('password')
-        # self._authkey = self._username + ":" + self._password
-        # self._authkey = base64.b64encode(self._authkey)
-        # self._authkey = "Basic " + self._authkey
-        # self._logger.info('[Ghost2logger] authkey = ' + self._authkey)
         self._st2_api_key = self._config.get('st2_api_key', None)
         self._st2url = self._config.get('st2url')
 
@@ -84,14 +80,11 @@ class Ghost2loggerLoopback(PollingSensor):
             self._logger.info('[ghost2logger_sensor]: GUID does not match')
             self._logger.info('[ghost2logger_sensor]: purged')
             self._ghost2loggerGUID = _tmp_guid
-            self._logger.info('[ghost2logger_sensor]: Ghost2logger GUID ' +
-                              self._ghost2loggerGUID)
-
-        # try:
-        #     self._logger.info('[ghost2logger_sensor]: Ghost2logger GUID ' +
-        #                       self._ghost2loggerGUID)
-        # except:
-        #     self._logger.info('[ghost2logger_sensor]: Do not have GUID')
+            try:
+                self._logger.info('[ghost2logger_sensor]: Ghost2logger GUID ' +
+                                  self._ghost2loggerGUID)
+            except Exception as e:
+                self._logger.info('ghost2logger_sensor]: Do not have GUID')
 
         # 2. Connect to API and get rules
         HEADERS = {"St2-Api-Key": self._st2_api_key}
@@ -122,14 +115,15 @@ class Ghost2loggerLoopback(PollingSensor):
 
     def _process_rules(self, rules_payload):
         """Process the rules payload."""
-        # self._rules = {"1.1.1.1": ["thing", "boobs"]}
+        # self._rules = {"1.1.1.1": ["thing", "test"]}
         _new = {}
 
         # _output = json.dumps(rules_payload)
 
         try:
-            # 1. Sort rules in to rule dictionary
+            # Sort rules in to rule dictionary
             for _rule in rules_payload:
+                self._logger.info(_rule)
                 _host = _rule['criteria']['trigger.host']['pattern']
                 if _host in _new:
                     _new[_host].append(_rule['criteria']['trigger.pattern']
@@ -214,7 +208,7 @@ class Ghost2loggerLoopback(PollingSensor):
                 for _item in _data['pattern']:
                     _guid = str(_item)
 
-                return _guid
+                return str(_guid)
             else:
                 return ""
 
