@@ -70,17 +70,21 @@ __Breakdown of config items__
 
 # Ghost2logger Service
 
-As the Ghost2logger component is written in Golang (hence the name - Go ST2 Logger - Ghost looks far cooler), we can run the binary in one of two ways:
+As the Ghost2logger component is written in Golang (hence the name - Go ST2 Logger - Ghost looks far cooler), we can run the binary in one of several ways:
 
 *	In the foreground under 'screen'. Start the service running then dettach
-or run as a service:
-*	Copy the /opt/stackstorm/packs/ghost2logger/bin/ghost2logger.service to /etc/systemd/system
+*	Run in the foreground with the correct permissions just for the hell of it
+*	As a systemd service. Copy the /opt/stackstorm/packs/ghost2logger/bin/ghost2logger.service to /etc/systemd/system
 	Check that the service can be read: ```systemctl is-active ghost2logger.service```
 	Start the service ```systemctl start ghost2logger.service```
 	Check that it's running ```systemctl status ghost2logger.service```
 
-	Then you can look at messages coming out of it using: ```journalctl -u ghost2logger.service -f```
-  Use Ctrl+c to exit without affecting the service.
+Then you can look at messages coming out of it using: ```journalctl -u ghost2logger.service -f```
+Use Ctrl+c to exit without affecting the service.
+
+Ensure that you pass in the configuration with the config switch `-cfg X` when starting Ghost2logger with the systemd backend. Ghost2logger will check the local directory for a configuration and if one is present it will not look anywhere else. Control that behaviour with the `-cfg` switch using a full path to the configuration file.
+
+Check out the service descriptor file in the binary directory of this repository for more info.
 
 # Rules
 
