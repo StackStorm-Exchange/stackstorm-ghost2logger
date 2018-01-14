@@ -123,7 +123,8 @@ class Ghost2loggerLoopback(PollingSensor):
         try:
             # Sort rules in to rule dictionary
             for _rule in rules_payload:
-                self._logger.info(_rule)
+                # Uncomment line below for debugging
+                # self._logger.info(_rule)
                 _host = _rule['criteria']['trigger.host']['pattern']
                 if _host in _new:
                     _new[_host].append(_rule['criteria']['trigger.pattern']

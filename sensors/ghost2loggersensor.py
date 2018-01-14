@@ -71,7 +71,7 @@ class Ghost2loggerSensor(Sensor):
                                                   '0.0.0.0')
 
         self._sensor_listen_port = self._config.get('sensor_listen_port',
-                                                    '12021')
+                                                    '12022')
 
         self._username = self._config.get('username', 'admin')
         self._password = self._config.get('password', 'admin')
@@ -119,7 +119,7 @@ class Ghost2loggerSensor(Sensor):
         self._logger.info('[Ghost2logger]: Calling Flask App')
 
         self._app.run(host=self._sensor_listen_ip,
-                      port=self._sensor_listen_port)
+                      port=int(self._sensor_listen_port))
 
     def cleanup(self):
         """Stuff."""
@@ -138,7 +138,7 @@ class Ghost2loggerSensor(Sensor):
         pass
 
     def _process_request(self, request):
-        self._logger.info('[Ghost2logger]: Received Request')
+        self._logger.info('[Ghost2logger]: Received Matched Syslog Event')
         if request.headers['Content-Type'] == 'application/json':
             payload = request.json
             if 'pattern' and 'host' and 'hostpattern' and 'message' in payload:
