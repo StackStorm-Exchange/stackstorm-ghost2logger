@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.0.1
+
+* Added dummy action so that the ST2 CI pipeline does not fail when registering actions
+
 ## 2.0.0
 
 * Drop Python 2.7 support
